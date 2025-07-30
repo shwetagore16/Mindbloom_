@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="120" height="140" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="60" cy="90" rx="50" ry="45" fill="#7b5e57" stroke="#4b3832" stroke-width="4"/>
+  <rect x="30" y="80" width="60" height="40" rx="15" fill="#a1887f" stroke="#4b3832" stroke-width="3"/>
+  <rect x="40" y="110" width="40" height="15" rx="7" fill="#d7ccc8" stroke="#4b3832" stroke-width="2"/>
+  <ellipse cx="60" cy="60" rx="38" ry="18" fill="#bcaaa4" stroke="#4b3832" stroke-width="3"/>
+  <rect x="50" y="30" width="20" height="25" rx="8" fill="#a1887f" stroke="#4b3832" stroke-width="2"/>
+  <ellipse cx="60" cy="30" rx="18" ry="10" fill="#bcaaa4" stroke="#4b3832" stroke-width="2"/>
+  <text x="60" y="70" text-anchor="middle" fill="#4b3832" font-size="18" font-family="Poppins">Empty</text>
+</svg>

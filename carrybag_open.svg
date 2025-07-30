@@ -1,0 +1,8 @@
+<svg width="120" height="140" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect x="15" y="60" width="90" height="50" rx="18" fill="#a0522d" stroke="#7c421a" stroke-width="4"/>
+  <rect x="25" y="25" width="70" height="25" rx="12" fill="#d2a679" stroke="#a0522d" stroke-width="3"/>
+  <rect x="40" y="5" width="40" height="30" rx="10" fill="#b88654" stroke="#7c421a" stroke-width="2.5"/>
+  <ellipse cx="60" cy="120" rx="32" ry="10" fill="#7c421a" fill-opacity="0.3"/>
+  <path d="M35 80 Q60 110 85 80" stroke="#7c421a" stroke-width="3" fill="none"/>
+  <text x="50%" y="95" text-anchor="middle" fill="#fff" font-size="13" font-family="Poppins, Arial" fill-opacity="0.7">Empty</text>
+</svg>

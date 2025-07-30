@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thought Terrarium - MindBloom</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        :root {
+            --bg-color-1: #d4f1f4;
+            --bg-color-2: #e0bbf9;
+            --bg-color-3: #c3f0ca;
+            --card-bg: rgba(255, 255, 255, 0.25);
+            --text-dark: #333;
+            --text-light: #555;
+            --accent-color: #6a82fb;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--bg-color-1), var(--bg-color-2), var(--bg-color-3));
+            color: var(--text-dark);
+            animation: gradient-animation 15s ease infinite;
+            background-size: 400% 400%;
+        }
+
+        @keyframes gradient-animation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            margin: 0 auto;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            margin-bottom: 2rem;
+        }
+
+        h1, h2, h3 {
+            margin-top: 0;
+            color: var(--text-dark);
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Header Styles */
+        .header {
+            width: 100%;
+            padding: 15px 30px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        main {
+            padding: 100px 20px 50px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Thought Terrarium Specific Styles */
+        .motivational-phrase {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 1s ease-out;
+        }
+
+        .terrarium-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .terrarium-visual {
+            position: relative;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .terrarium-visual::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: #8B5A2B;
+            border-radius: 50% 50% 0 0 / 20px;
+            z-index: 1;
+        }
+
+        .plant {
+            position: absolute;
+            bottom: 20%;
+            z-index: 2;
+            font-size: 2rem;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            transform-origin: bottom center;
+            opacity: 0;
+            transform: scale(0.5) translateY(20px);
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+
+        .plant.grow {
+            animation: 
+                plant-appear 1s ease-out forwards,
+                float 6s ease-in-out infinite 1s;
+        }
+
+        @keyframes plant-appear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .plant.positive { filter: hue-rotate(120deg) saturate(1.2); }
+        .plant.negative { filter: grayscale(0.5) brightness(0.8); }
+        .plant.neutral { filter: sepia(0.3) saturate(1.3); }
+
+        .withered-flower-emoji {
+            font-size: 1em;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            transform-origin: bottom center;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .plant-emoji {
+            font-size: 1em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+            display: inline-block;
+        }
+
+        .plant:hover .plant-emoji {
+            transform: scale(1.2);
+        }
+
+        .plant-appear {
+            animation: plant-appear 0.8s ease-out forwards;
+        }
+
+        /* Thought input area */
+        .thought-input-container {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        #thought-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: none;
+            min-height: 60px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #thought-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(106, 130, 251, 0.2);
+        }
+
+        .thought-type-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+            flex-wrap: wrap;
+        }
+
+        .thought-type-btn {
+            padding: 8px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .thought-type-btn:hover {
+            background: rgba(255, 255, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .thought-type-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        #add-thought-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #add-thought-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 130, 251, 0.4);
+        }
+
+        #add-thought-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-15px) rotate(2deg); }
+        }
+
+        @keyframes sway {
+            0%, 100% { transform: rotate(-2deg); }
+            50% { transform: rotate(2deg); }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .terrarium-visual {
+                height: 250px;
+            }
+
+            .thought-type-buttons {
+                flex-direction: column;
+            }
+
+            .thought-type-btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .header {
+                padding: 10px 15px;
+            }
+
+            .logo {
+                font-size: 1.5rem;
+            }
+
+            main {
+                padding: 80px 15px 30px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+        }
+
+        .motivational-phrase h2 {
+            color: #4a6fa5;
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        .motivational-phrase p {
+            color: #555;
+            font-size: 1.1rem;
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0) rotate(0deg); 
+            }
+            50% { 
+                transform: translateY(-15px) rotate(2deg); 
+            }
+        }
+
+        @keyframes fade-out {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+
+        .terrarium-container {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .terrarium-visual {
+            position: relative;
+            height: 300px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+
+        .terrarium-visual::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 40%;
+            background: #8B5A2B;
+            border-radius: 50% 50% 0 0 / 20px;
+            z-index: 1;
+        }
+
+        .plant {
+            position: absolute;
+            bottom: 20%;
+            z-index: 2;
+            font-size: 2rem;
+            line-height: 1;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            transform-origin: bottom center;
+            opacity: 0;
+            transform: scale(0.5) translateY(20px);
+            will-change: transform, opacity;
+            pointer-events: none;
+        }
+
+        .plant.grow {
+            animation: 
+                plant-appear 1s ease-out forwards,
+                float 6s ease-in-out infinite 1s;
+        }
+
+        @keyframes plant-appear {
+            0% {
+                opacity: 0;
+                transform: scale(0.5) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .plant.positive { filter: hue-rotate(120deg) saturate(1.2); }
+        .plant.negative { filter: grayscale(0.5) brightness(0.8); }
+        .plant.neutral { filter: sepia(0.3) saturate(1.3); }
+
+        .withered-flower-emoji {
+            font-size: 1em;
+            opacity: 0.9;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            transform-origin: bottom center;
+            animation: sway 5s ease-in-out infinite;
+        }
+
+        .plant-emoji {
+            font-size: 1em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .plant:hover .plant-emoji {
+            transform: scale(1.2);
+        }
+
+        .plant-appear {
+            animation: plant-appear 0.8s ease-out forwards;
+        }
+
+        /* Thought input area */
+        .thought-input-container {
+            margin: 20px 0;
+            position: relative;
+        }
+
+        #thought-input {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            background: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            resize: none;
+            min-height: 60px;
+            outline: none;
+        }
+
+        #thought-input:focus {
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 4px rgba(106, 130, 251, 0.2);
+        }
+
+        .thought-type-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .thought-type-btn {
+            padding: 8px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .thought-type-btn:hover {
+            background: rgba(255, 255, 255, 0.7);
+            transform: translateY(-2px);
+        }
+
+        .thought-type-btn.active {
+            background: var(--accent-color);
+            color: white;
+            border-color: var(--accent-color);
+            font-weight: 600;
+        }
+
+        #add-thought-btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 50px;
+            background: var(--accent-color);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        #add-thought-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(106, 130, 251, 0.4);
+        }
+
+        #add-thought-btn:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            🌱 MindBloom
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mood.html">My Mood</a></li>
+                <li><a href="plant.html">My Plant</a></li>
+                <li><a href="journal.html">Journal Space</a></li>
+                <li><a href="relax.html">Relax Zone</a></li>
+                <li><a href="thought_terrarium.html" class="active">Thought Terrarium</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="dashboard">
+        <h1 class="welcome-message">Thought Terrarium</h1>
+        
+        <div class="container" style="max-width: 1000px; margin: 0 auto; padding: 0 1rem;">
+            <!-- Main Description -->
+            <div class="glass-card" style="margin-bottom: 2rem; text-align: center; padding: 2rem;">
+                <h2>🌿 Your Digital Thought Terrarium</h2>
+                <p style="margin: 1.5rem 0; color: #555; line-height: 1.6;">
+                    Nurture your mental ecosystem by cultivating a beautiful digital terrarium that reflects your thoughts and emotions.
+                    Every thought you add shapes this living space, creating a visual diary of your mental journey.
+                </p>
+            </div>
+            
+            <!-- Main Terrarium Display -->
+            <div class="glass-card terrarium-container">
+                <div class="motivational-phrase">
+                    <h2>🌱 Grow Your Own Positive Garden Here 🌱</h2>
+                    <p>Every thought you plant helps shape your mental landscape. Nurture positivity and watch your garden flourish!</p>
+                </div>
+                <div class="terrarium-visual" id="terrarium-visual">
+                    <!-- Visual elements will be added here by JavaScript -->
+                    <div class="terrarium-soil"></div>
+                    <div class="terrarium-message">
+                        <div class="terrarium-icon">🌱</div>
+                        <p>Your thought terrarium is waiting to grow</p>
+                    </div>
+                </div>
+
+                <!-- Thought Input -->
+                <div class="thought-input-container">
+                    <h3>What's on your mind?</h3>
+                    <textarea 
+                        id="thought-input" 
+                        placeholder="Type your thought here..."
+                        rows="3"
+                    ></textarea>
+                    
+                    <div class="thought-type-buttons">
+                        <button class="thought-type-btn active" data-type="plant">
+                            🌱 Plant (Positive)
+                        </button>
+                        <button class="thought-type-btn" data-type="moss">
+                            🍃 Moss (Neutral)
+                        </button>
+                        <button class="thought-type-btn" data-type="fog">
+                            🥀 Spoiled (Uncertain)
+                        </button>
+                        <button class="thought-type-btn" data-type="thorn">
+                            🌵 Thorns (Challenging)
+                        </button>
+                    </div>
+                    
+                    <button id="add-thought-btn" class="add-thought-btn">
+                        Add to Terrarium
+                    </button>
+                </div>
+            
+            <!-- How It Works Section -->
+            <div class="glass-card" style="margin-bottom: 2rem; padding: 2rem;">
+                <h3 style="color: #4a6fa5; margin-bottom: 1.5rem;">How Your Thought Terrarium Grows</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌿</div>
+                        <h4 style="margin: 0.5rem 0; color: #4a6fa5;">Positive Thoughts</h4>
+                        <p style="color: #555; font-size: 0.9rem; margin: 0;">Add beautiful, rare plants to your terrarium with each positive thought.</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">🌱</div>
+                        <h4 style="margin: 0.5rem 0; color: #4a6fa5;">Nurture & Prune</h4>
+                        <p style="color: #555; font-size: 0.9rem; margin: 0;">Care for your thoughts by nurturing or pruning them as they evolve.</p>
+                    </div>
+                    
+                    <div style="background: rgba(255,255,255,0.1); padding: 1.5rem; border-radius: 8px;">
+                        <div style="font-size: 2rem; margin-bottom: 0.5rem;">📔</div>
+                        <h4 style="margin: 0.5rem 0; color: #4a6fa5;">Visual Diary</h4>
+                        <p style="color: #555; font-size: 0.9rem; margin: 0;">Watch your mental ecosystem grow and change over time.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Why It's Unique -->
+            <div class="glass-card" style="background: rgba(106, 130, 251, 0.1); border: 1px solid rgba(106, 130, 251, 0.3); padding: 2rem; text-align: center;">
+                <h3 style="color: #4a6fa5; margin-bottom: 1rem;">Why It's Unique</h3>
+                <p style="color: #555; font-style: italic; margin: 0;">
+                    "It's not just about tracking – it's about caring for your mental ecosystem."<br>
+                    Watch as your thoughts transform into a living, breathing representation of your inner world.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script src="thought_terrarium.js"></script>
+</body>
+</html>

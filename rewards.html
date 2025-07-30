@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reward Bloom - MindBloom</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="rewards.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            🌱 MindBloom
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mood.html">My Mood</a></li>
+                <li><a href="journal.html">Journal Space</a></li>
+                <li><a href="relax.html">Relax Zone</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="dashboard">
+        <h1 class="welcome-message">Reward Bloom</h1>
+        <div class="container">
+            <div class="pomodoro-card">
+                <h2>Pomodoro Timer</h2>
+                <div class="timer-container">
+                    <svg class="timer-svg" width="200" height="200" viewBox="0 0 120 120">
+                        <circle class="timer-circle-bg" cx="60" cy="60" r="54" />
+                        <circle class="timer-circle-progress" cx="60" cy="60" r="54" />
+                    </svg>
+                    <div class="timer-display">25:00</div>
+                </div>
+                <div class="timer-controls">
+                    <button id="start-timer">Start</button>
+                    <button id="pause-timer">Pause</button>
+                    <button id="reset-timer">Reset</button>
+                </div>
+                <div class="timer-modes">
+                    <button class="mode-btn active" data-time="1500">Pomodoro</button>
+                    <button class="mode-btn" data-time="300">Short Break</button>
+                    <button class="mode-btn" data-time="900">Long Break</button>
+                </div>
+            </div>
+
+            <div class="tasks-card">
+                <h2>My Tasks</h2>
+                <div class="task-input">
+                    <input type="text" id="new-task" placeholder="Add a new task...">
+                    <button id="add-task">+</button>
+                </div>
+                <ul id="task-list"></ul>
+            </div>
+
+            <div class="rewards-list-card">
+                <h2>My Rewards</h2>
+                <div class="reward-input">
+                    <input type="text" id="new-reward" placeholder="Add a custom reward...">
+                    <input type="number" id="new-reward-duration" placeholder="Mins" min="1" value="5">
+                    <button id="add-reward">+</button>
+                </div>
+                <ul id="reward-list"></ul>
+            </div>
+        </div>
+    </main>
+
+    <div id="bloom-card-modal" class="modal">
+        <div class="modal-content">
+            <div id="confetti-container"></div>
+            <h2>Congratulations!</h2>
+            <p>You've earned a break!</p>
+            <div id="reward-timer-display" class="timer-display" style="display: none;">05:00</div>
+            <div class="reward-suggestion-container">
+                <p>Here's a suggestion:</p>
+                <div class="reward-suggestion"></div>
+            </div>
+            <div class="modal-actions">
+                <button id="start-reward-btn">Start Reward</button>
+                <button id="close-modal">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="rewards.js"></script>
+</body>
+</html>

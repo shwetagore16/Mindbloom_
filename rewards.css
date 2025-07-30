@@ -1,0 +1,333 @@
+:root {
+    --bg-color: #F8F7FF;
+    --primary-color: #7B68EE;
+    --secondary-color: #8D80EE;
+    --accent-color: #FF6B6B;
+    --text-color: #343C6A;
+    --card-bg: #FFFFFF;
+    --shadow: 0 10px 30px rgba(123, 104, 238, 0.1);
+    --font-family: 'Poppins', sans-serif;
+}
+
+.dashboard .container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    align-items: start;
+}
+
+.pomodoro-card, .tasks-card, .rewards-list-card {
+    background: var(--card-bg);
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.pomodoro-card:hover, .tasks-card:hover, .rewards-list-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 40px rgba(123, 104, 238, 0.2);
+}
+
+h2 {
+    font-weight: 600;
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+/* New Pomodoro Timer */
+.timer-container {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    margin: 0 auto 2rem;
+}
+
+.timer-svg {
+    transform: rotate(-90deg);
+}
+
+.timer-circle-bg {
+    fill: none;
+    stroke: #E6E6FA;
+    stroke-width: 10;
+}
+
+.timer-circle-progress {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 10;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s linear;
+}
+
+.timer-display {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2.75rem;
+    font-weight: 700;
+}
+
+.timer-controls, .timer-modes {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.timer-controls button, .timer-modes button {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.timer-controls button:hover, .timer-modes button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-2px);
+}
+
+.timer-modes button {
+    background: none;
+    color: var(--text-color);
+    border: 2px solid #E6E6FA;
+}
+
+.timer-modes .mode-btn.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* New Task/Reward Input */
+.task-input, .reward-input {
+    display: flex;
+    gap: 10px;
+    position: relative;
+    margin-bottom: 1.5rem;
+    align-items: center;
+}
+
+#new-task, #new-reward {
+    flex: 1;
+    padding: 15px 20px;
+}
+
+#new-reward-duration {
+    width: 70px;
+    padding: 15px 10px;
+    text-align: center;
+    border: 2px solid #E6E6FA;
+    border-radius: 50px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease;
+}
+
+#new-task:focus, #new-reward:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+#add-task, #add-reward {
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    width: auto;
+    height: auto;
+    padding: 10px 15px;
+    font-size: 1.5rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#add-task:hover, #add-reward:hover {
+    background: var(--secondary-color);
+}
+
+/* New List Styles */
+#task-list {
+    list-style: none;
+    padding: 0;
+    max-height: 250px;
+    overflow-y: auto;
+}
+
+#reward-list {
+    list-style: none;
+    padding: 0;
+    max-height: 250px;
+    overflow-y: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start;
+}
+
+#reward-list li {
+    flex: 1 1 180px;
+    max-width: 220px;
+    min-width: 150px;
+    margin-bottom: 0;
+    /* Keep existing styles for background, border-radius, etc. */
+}
+
+#task-list li {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: #F8F7FF;
+    border-radius: 10px;
+    margin-bottom: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#reward-list li {
+    display: block;
+    align-items: stretch;
+    padding: 15px;
+    background: #F8F7FF;
+    border-radius: 10px;
+    margin-bottom: 0;
+    transition: background-color 0.3s ease;
+}
+
+#task-list li span {
+    flex: 1;
+    transition: color 0.3s ease;
+}
+
+#task-list li.completed span {
+    text-decoration: line-through;
+    color: #A9A9A9;
+    opacity: 0.7;
+}
+
+.task-actions, .reward-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.task-actions button, .reward-actions button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.task-actions button:hover, .reward-actions button:hover {
+    transform: scale(1.2);
+}
+
+/* New Bloom Card Modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(52, 60, 106, 0.7);
+    backdrop-filter: blur(5px);
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal.show {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: var(--card-bg);
+    padding: 3rem;
+    border-radius: 20px;
+    text-align: center;
+    position: relative;
+    width: 90%;
+    max-width: 400px;
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+.modal h2 {
+    color: var(--primary-color);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.modal p {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.reward-suggestion-container {
+    margin-bottom: 2rem;
+}
+
+.reward-suggestion {
+    background: linear-gradient(135deg, #7B68EE, #8D80EE);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 15px;
+    margin: 2rem 0;
+    font-size: 1.3rem;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(123, 104, 238, 0.3);
+}
+
+.modal-actions {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+#start-reward-btn, #close-modal {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 50px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+#start-reward-btn {
+    background: var(--primary-color);
+}
+
+#start-reward-btn:hover {
+    background: var(--secondary-color);
+}
+
+#close-modal:hover {
+    background: #E55B5B;
+    transform: translateY(-2px);
+}
+
+#confetti-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1001;
+}

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - MindBloom</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            🌱 MindBloom
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mood.html">My Mood</a></li>
+                <li><a href="journal.html">Journal Space</a></li>
+                <li><a href="relax.html">Relax Zone</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="dashboard">
+        <h1 class="welcome-message" id="profile-welcome">Hello!</h1>
+        <div class="profile-container">
+            <div class="profile-card">
+                <h2>My Details</h2>
+                <div class="profile-info">
+                    <div class="info-item">
+                        <label>Full Name</label>
+                        <p id="display-name">User Name</p>
+                        <input type="text" id="input-name" class="hidden">
+                    </div>
+                    <div class="info-item">
+                        <label>Email Address</label>
+                        <p id="display-email">user@example.com</p>
+                        <input type="email" id="input-email" class="hidden">
+                    </div>
+                </div>
+                <button id="edit-profile-btn" class="btn">Edit Profile</button>
+                <button id="logout-btn" class="btn btn-logout">Log Out</button>
+            </div>
+
+
+        </div>
+    </main>
+    <div id="toast-notification" class="toast"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@1.35.7/dist/umd/supabase.min.js"></script>
+    <script src="auth.js"></script>
+    <script src="main.js"></script>
+    <script src="profile.js"></script>
+</body>
+</html>

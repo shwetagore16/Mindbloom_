@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Blueprint | Mindbloom</title>
+
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Poppins & Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- D3.js for the graph visualization -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <style>
+        /* Defining the color palette from your provided CSS */
+        :root {
+            --primary-accent: #6a82fb;
+            --primary-accent-dark: #4f65b9;
+            --secondary-accent: #c3f0ca;
+            --tertiary-accent: #e0bbf9;
+            --bg-main: #f7fafc;
+            --bg-card: rgba(255, 255, 255, 0.95);
+            --text-dark: #333;
+            --text-light: #f7fafc;
+            --border-color: #e5e7eb;
+            --shadow-color: rgba(31, 38, 135, 0.22);
+            --space-dark: #0f172a;
+            --space-light: #1e293b;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+            overscroll-behavior: none;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            letter-spacing: -0.025em;
+        }
+
+        /* Main container styling */
+        .main-container {
+            display: grid;
+            grid-template-columns: 380px 1fr;
+            height: calc(100vh - 70px); /* Adjust height for header */
+            gap: 1.5rem;
+            padding: 1.5rem;
+            margin-top: 70px; /* Adjust margin for header */
+        }
+
+        /* Control Panel Styling */
+        .control-panel {
+            background-color: var(--bg-card);
+            border-radius: 18px;
+            box-shadow: 0 6px 32px 0 var(--shadow-color);
+            border: 1.5px solid var(--secondary-accent);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            overflow-y: auto;
+        }
+
+        /* Visualization Panel Styling */
+        .visualization-panel {
+            background: linear-gradient(to bottom, var(--space-dark), #000000);
+            border-radius: 18px;
+            box-shadow: 0 6px 32px 0 var(--shadow-color);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        #placeholder-text {
+            color: rgba(255, 255, 255, 0.4);
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.1rem;
+            text-align: center;
+            max-width: 300px;
+            transition: opacity 0.5s ease;
+        }
+
+        #graph-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Form elements styling */
+        .form-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: #4a5568;
+        }
+
+        .form-input {
+            width: 100%;
+            border: 1.5px solid var(--border-color);
+            border-radius: 8px;
+            padding: 0.75rem;
+            font-size: 1rem;
+            background: #f3f4f6;
+            outline: none;
+            transition: all 0.2s ease-in-out;
+        }
+        .form-input:focus {
+            border-color: var(--primary-accent);
+            box-shadow: 0 0 0 3px rgba(106, 130, 251, 0.3);
+        }
+
+        .form-button {
+            background: var(--primary-accent);
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            padding: 0.75rem 1.5rem;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            width: 100%;
+            margin-top: 1rem;
+        }
+        .form-button:hover {
+            background: var(--primary-accent-dark);
+        }
+        
+        /* Tag styling */
+        .tag-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+        .tag {
+            background-color: var(--tertiary-accent);
+            color: var(--text-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        .tag-remove {
+            margin-left: 0.5rem;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        /* Tooltip for graph nodes */
+        .tooltip {
+            position: absolute;
+            text-align: center;
+            padding: 0.5rem 0.75rem;
+            font-size: 0.85rem;
+            background: var(--text-dark);
+            color: var(--text-light);
+            border-radius: 8px;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            z-index: 10;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr;
+                height: auto;
+                min-height: 100vh;
+            }
+            .control-panel {
+                height: auto;
+            }
+            .visualization-panel {
+                min-height: 500px;
+            }
+        }
+
+        /* Header styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 40px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .header .logo {
+            font-size: 1.8em;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .header nav ul {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .header nav ul li a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 1.1em;
+            transition: color 0.3s;
+        }
+
+        .header nav ul li a:hover {
+            color: var(--primary-accent);
+        }
+
+    </style>
+</head>
+<body class="overflow-hidden">
+
+    <header class="header">
+        <div class="logo">
+            🌱 MindBloom
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mood.html">My Mood</a></li>
+                <li><a href="journal.html">Journal Space</a></li>
+                <li><a href="relax.html">Relax Zone</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="main-container">
+        <!-- Left Panel: Controls and Form -->
+        <div id="control-panel" class="control-panel">
+            <div class="flex items-center mb-6">
+                <h1 class="text-3xl text-gray-800">The Blueprint</h1>
+            </div>
+            <p class="text-gray-600 mb-8 text-sm">Log your effort to visualize your growth. Each entry forges a new node in your personal knowledge map.</p>
+
+            <form id="log-form">
+                <div class="mb-4">
+                    <label for="description" class="form-label">What did you work on?</label>
+                    <input type="text" id="description" class="form-input" placeholder="e.g., Debugged the user auth flow" required>
+                </div>
+
+                <div class="mb-4">
+                    <label for="duration" class="form-label">How long was the session?</label>
+                    <select id="duration" class="form-input" required>
+                        <option value="0.5">30 minutes</option>
+                        <option value="1" selected>1 hour</option>
+                        <option value="1.5">1.5 hours</option>
+                        <option value="2">2 hours</option>
+                        <option value="3">3+ hours</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label for="tags" class="form-label">Tags (skills, topics, etc.)</label>
+                    <input type="text" id="tags" class="form-input" placeholder="Type a tag and press Enter...">
+                    <div id="tag-container" class="tag-container"></div>
+                </div>
+
+                <button type="submit" class="form-button">Forge this Effort</button>
+            </form>
+            
+            <div class="mt-auto pt-6 text-center text-xs text-gray-400">
+                <p>&copy; 2025 Mindbloom. Built for you.</p>
+            </div>
+        </div>
+
+        <!-- Right Panel: Visualization -->
+        <div class="visualization-panel">
+            <p id="placeholder-text">Your Blueprint is empty. Forge your first effort to begin building your knowledge map.</p>
+            <svg id="graph-canvas"></svg>
+        </div>
+    </div>
+    
+    <!-- Tooltip element -->
+    <div class="tooltip" id="tooltip"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- GSAP Animations ---
+            gsap.from('.control-panel', { duration: 0.8, x: -100, opacity: 0, ease: 'power2.out' });
+            gsap.from('.visualization-panel', { duration: 0.8, x: 100, opacity: 0, ease: 'power2.out', delay: 0.2 });
+
+            // --- Tag Input Logic ---
+            const tagsInput = document.getElementById('tags');
+            const tagContainer = document.getElementById('tag-container');
+            let tags = [];
+
+            tagsInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && tagsInput.value.trim() !== '') {
+                    e.preventDefault();
+                    addTag(tagsInput.value.trim());
+                    tagsInput.value = '';
+                }
+            });
+
+            function addTag(label) {
+                if (tags.includes(label)) return;
+                tags.push(label);
+                const tagElement = document.createElement('div');
+                tagElement.classList.add('tag');
+                tagElement.innerHTML = `
+                    <span>${label}</span>
+                    <span class="tag-remove" data-label="${label}">&times;</span>
+                `;
+                tagContainer.appendChild(tagElement);
+            }
+
+            tagContainer.addEventListener('click', (e) => {
+                if (e.target.classList.contains('tag-remove')) {
+                    const label = e.target.dataset.label;
+                    tags = tags.filter(tag => tag !== label);
+                    e.target.parentElement.remove();
+                }
+            });
+
+            // --- D3.js Visualization ---
+            const svg = d3.select("#graph-canvas");
+            const placeholder = document.getElementById('placeholder-text');
+            const width = document.querySelector('.visualization-panel').clientWidth;
+            const height = document.querySelector('.visualization-panel').clientHeight;
+            svg.attr('width', width).attr('height', height);
+
+            const tooltip = d3.select("#tooltip");
+
+            let nodes = [];
+            let links = [];
+            // Switched to a brighter color scheme for the dark background
+            const tagColors = d3.scaleOrdinal(d3.schemeSet3);
+
+            // --- Starfield Background ---
+            const starGroup = svg.append("g").attr("class", "stars");
+            const numStars = Math.floor(width * height / 2000);
+            for (let i = 0; i < numStars; i++) {
+                starGroup.append("circle")
+                    .attr("cx", Math.random() * width)
+                    .attr("cy", Math.random() * height)
+                    .attr("r", Math.random() * 1.5)
+                    .style("fill", `rgba(255, 255, 255, ${0.3 + Math.random() * 0.5})`);
+            }
+
+            const simulation = d3.forceSimulation(nodes)
+                .force("link", d3.forceLink(links).id(d => d.id).distance(120))
+                .force("charge", d3.forceManyBody().strength(-300))
+                .force("center", d3.forceCenter(width / 2, height / 2))
+                .force("x", d3.forceX(width/2).strength(0.05))
+                .force("y", d3.forceY(height/2).strength(0.05));
+
+            let linkGroup = svg.append("g").attr("class", "links");
+            let nodeGroup = svg.append("g").attr("class", "nodes");
+
+            function updateGraph() {
+                // Hide placeholder if nodes exist
+                placeholder.style.opacity = nodes.length > 0 ? '0' : '1';
+
+                // Update nodes
+                let node = nodeGroup.selectAll("g.node").data(nodes, d => d.id);
+                node.exit().remove();
+                
+                const nodeEnter = node.enter().append("g").attr("class", "node")
+                    .call(d3.drag()
+                        .on("start", dragstarted)
+                        .on("drag", dragged)
+                        .on("end", dragended));
+
+                // Add glowing circle
+                nodeEnter.append("circle")
+                    .attr("r", d => 8 + d.duration * 5)
+                    .attr("fill", d => tagColors(d.tags[0] || "default"))
+                    .style("filter", d => `drop-shadow(0 0 6px ${tagColors(d.tags[0] || "default")})`);
+                
+                nodeEnter.on("mouseover", (event, d) => {
+                        tooltip.style("opacity", 1)
+                               .html(`<strong>${d.description}</strong><br/>${d.duration} hour(s)`);
+                    })
+                    .on("mousemove", (event) => {
+                        tooltip.style("left", (event.pageX + 15) + "px")
+                               .style("top", (event.pageY - 28) + "px");
+                    })
+                    .on("mouseout", () => {
+                        tooltip.style("opacity", 0);
+                    });
+
+                node = nodeEnter.merge(node);
+                
+                // Update links
+                let link = linkGroup.selectAll("line").data(links, d => `${d.source.id}-${d.target.id}`);
+                link.exit().remove();
+                link = link.enter().append("line")
+                    .attr("stroke-width", 1.5)
+                    .attr("stroke", "rgba(255, 255, 255, 0.2)") // Faint constellation lines
+                    .merge(link);
+
+                // Restart simulation
+                simulation.nodes(nodes);
+                simulation.force("link").links(links);
+                simulation.alpha(1).restart();
+
+                simulation.on("tick", () => {
+                    link
+                        .attr("x1", d => d.source.x)
+                        .attr("y1", d => d.source.y)
+                        .attr("x2", d => d.target.x)
+                        .attr("y2", d => d.target.y);
+
+                    node.attr("transform", d => `translate(${d.x},${d.y})`);
+                });
+            }
+            
+            function dragstarted(event, d) {
+                if (!event.active) simulation.alphaTarget(0.3).restart();
+                d.fx = d.x;
+                d.fy = d.y;
+            }
+            function dragged(event, d) {
+                d.fx = event.x;
+                d.fy = event.y;
+            }
+            function dragended(event, d) {
+                if (!event.active) simulation.alphaTarget(0);
+                d.fx = null;
+                d.fy = null;
+            }
+
+            // --- Form Submission ---
+            const form = document.getElementById('log-form');
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const description = document.getElementById('description').value;
+                const duration = parseFloat(document.getElementById('duration').value);
+                
+                const newNode = { id: Date.now(), description, duration, tags: [...tags] };
+                
+                nodes.forEach(existingNode => {
+                    const sharedTags = newNode.tags.filter(tag => existingNode.tags.includes(tag));
+                    if (sharedTags.length > 0) {
+                        links.push({ source: newNode.id, target: existingNode.id });
+                    }
+                });
+
+                nodes.push(newNode);
+                updateGraph();
+                form.reset();
+                tags = [];
+                tagContainer.innerHTML = '';
+            });
+            
+            // Handle window resizing
+            window.addEventListener('resize', () => {
+                const newWidth = document.querySelector('.visualization-panel').clientWidth;
+                const newHeight = document.querySelector('.visualization-panel').clientHeight;
+                svg.attr('width', newWidth).attr('height', newHeight);
+                simulation.force("center", d3.forceCenter(newWidth / 2, newHeight / 2)).restart();
+                // Redraw stars on resize
+                starGroup.selectAll("* ").remove();
+                const newNumStars = Math.floor(newWidth * newHeight / 2000);
+                 for (let i = 0; i < newNumStars; i++) {
+                    starGroup.append("circle")
+                        .attr("cx", Math.random() * newWidth)
+                        .attr("cy", Math.random() * newHeight)
+                        .attr("r", Math.random() * 1.5)
+                        .style("fill", `rgba(255, 255, 255, ${0.3 + Math.random() * 0.5})`);
+                }
+            });
+
+            updateGraph();
+        });
+    </script>
+</body>
+</html>

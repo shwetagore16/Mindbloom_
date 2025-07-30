@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | Mindbloom</title>
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Tailwind CSS for utility classes -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Poppins & Nunito -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;900&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --primary-accent: #6a82fb;
+            --secondary-accent: #c3f0ca;
+            --tertiary-accent: #e0bbf9;
+            --bg-main: #f7fafc;
+            --bg-card: #ffffff;
+            --text-dark: #1f2937;
+            --text-light: #f7fafc;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+            --shadow-color: rgba(31, 38, 135, 0.15);
+        }
+
+        body {
+            background-color: var(--bg-main);
+            font-family: 'Poppins', sans-serif;
+            color: var(--text-dark);
+        }
+
+        h1, h2, h3 {
+            font-family: 'Nunito', sans-serif;
+            font-weight: 900;
+            letter-spacing: -0.025em;
+        }
+
+        .section-highlight {
+            color: var(--primary-accent);
+        }
+
+        .illustration-card {
+            background-color: var(--bg-card);
+            border-radius: 18px;
+            box-shadow: 0 6px 32px 0 var(--shadow-color);
+            overflow: hidden;
+        }
+        
+        .illustration-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .content-card {
+            background-color: var(--bg-card);
+            border-radius: 18px;
+            padding: 2rem;
+            box-shadow: 0 6px 32px 0 var(--shadow-color);
+        }
+        
+        /* For GSAP animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            🌱 MindBloom
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mood.html">My Mood</a></li>
+                <li><a href="journal.html">Journal Space</a></li>
+                <li><a href="relax.html">Relax Zone</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
+        
+        <!-- Header Section -->
+        <header class="text-center mb-16 sm:mb-24">
+            <h2 class="text-base font-semibold uppercase tracking-wider section-highlight fade-in">Our Story</h2>
+            <h1 class="mt-2 text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-gray-900 fade-in">
+                This was built for us.
+            </h1>
+            <p class="mt-6 max-w-2xl mx-auto text-lg sm:text-xl text-muted fade-in">
+                Because we know the pressure. The late nights, the looming deadlines, and the constant feeling of needing to do more. Mindbloom was born from that shared experience.
+            </p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+            <!-- Section 1: The Problem -->
+            <div class="illustration-card fade-in">
+                <img src="https://placehold.co/600x500/e0bbf9/1f2937?text=The+2+AM+Grind" alt="Illustration of a student studying late at night">
+            </div>
+            <div class="fade-in">
+                <h3 class="text-3xl font-bold tracking-tight">The Invisible Weight</h3>
+                <p class="mt-4 text-lg text-muted">
+                    We've all been there. Juggling classes, projects, and a social life feels like running a marathon with no finish line. The world sees the results, but not the grind. The successes are public, but the stress is private. It's easy to feel like you're the only one struggling to keep it all together.
+                </p>
+            </div>
+
+            <!-- Section 2: The Idea -->
+            <div class="illustration-card lg:order-last fade-in">
+                <img src="https://placehold.co/600x500/c3f0ca/1f2937?text=A+Moment+of+Clarity" alt="Illustration of a lightbulb moment">
+            </div>
+            <div class="lg:order-first fade-in">
+                <h3 class="text-3xl font-bold tracking-tight">A Tool, Not Another Task</h3>
+                <p class="mt-4 text-lg text-muted">
+                    We realized the last thing we needed was another productivity app telling us to do more. We needed a space to acknowledge the effort. A tool to untangle our thoughts and see our own progress. Not for a grade, not for a resume, but for ourselves. That was the simple idea that sparked Mindbloom.
+                </p>
+            </div>
+            
+            <!-- Section 3: The Mission -->
+            <div class="illustration-card fade-in">
+                 <img src="https://placehold.co/600x500/6a82fb/ffffff?text=Your+Personal+Blueprint" alt="Illustration of the Blueprint feature">
+            </div>
+            <div class="fade-in">
+                <h3 class="text-3xl font-bold tracking-tight">Our Commitment</h3>
+                <p class="mt-4 text-lg text-muted">
+                    Our mission is to provide simple, science-backed tools that help you navigate the chaos of student life. We're committed to building a platform that values your mental well-being as much as your academic success. Because your peace of mind isn't a luxury—it's the foundation for everything else.
+                </p>
+            </div>
+
+            <!-- Section 4: Emotional Backpack -->
+            <div class="illustration-card lg:order-last fade-in">
+                <img src="https://placehold.co/600x500/FFC0CB/1f2937?text=Emotional+Backpack" alt="Illustration of a backpack unburdening worries">
+            </div>
+            <div class="lg:order-first fade-in">
+                <h3 class="text-3xl font-bold tracking-tight">The Emotional Backpack</h3>
+                <p class="mt-4 text-lg text-muted">
+                    Feeling weighed down? The Emotional Backpack is a space to offload your worries. Acknowledge your burdens, let them go, and feel lighter. It’s a simple, powerful exercise in emotional release.
+                </p>
+            </div>
+
+            <!-- Section 5: My Mood -->
+            <div class="illustration-card fade-in">
+                <img src="https://placehold.co/600x500/ADD8E6/1f2937?text=My+Mood+Tracker" alt="Illustration of a mood chart">
+            </div>
+            <div class="fade-in">
+                <h3 class="text-3xl font-bold tracking-tight">Track Your Mood</h3>
+                <p class="mt-4 text-lg text-muted">
+                    Understand your emotional landscape. Our mood tracker helps you see patterns over time, offering insights into what lifts you up and what brings you down. Knowledge is the first step to empowerment.
+                </p>
+            </div>
+
+            <!-- Section 6: My Plant -->
+            <div class="lg:col-span-2 fade-in">
+                <h3 class="text-3xl font-bold tracking-tight">Nurture Your Plant</h3>
+                <p class="mt-4 text-lg text-muted">
+                    Grow a digital plant as a gentle reminder of your own growth. Tending to your plant is a small act of self-care, a visual representation of the progress you make every day.
+                </p>
+            </div>
+
+            <!-- Section 7: Journal Space -->
+            <div class="lg:col-span-2 fade-in">
+                <h3 class="text-3xl font-bold tracking-tight">Your Private Journal</h3>
+                <p class="mt-4 text-lg text-muted">
+                    A secure and private space for your thoughts. Whether it's a fleeting idea or a deep reflection, your Journal Space is here to listen without judgment. Unload your mind and find clarity.
+                </p>
+            </div>
+
+            <!-- Section 8: Relax Zone -->
+            <div class="lg:col-span-2 fade-in">
+                <h3 class="text-3xl font-bold tracking-tight">Find Your Calm</h3>
+                <p class="mt-4 text-lg text-muted">
+                    Step into the Relax Zone when you need a moment of peace. With a curated collection of calming sounds and guided exercises, it’s your instant escape from the noise.
+                </p>
+            </div>
+
+            <!-- Section 9: The Blueprint -->
+            <div class="lg:col-span-2 fade-in">
+                <h3 class="text-3xl font-bold tracking-tight">Visualize Your Growth</h3>
+                <p class="mt-4 text-lg text-muted">
+                    The Blueprint transforms your efforts into a beautiful, interactive visualization. See how your skills and knowledge connect and grow over time. It’s a map of your personal and academic journey.
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Team Section -->
+        <div class="mt-24 text-center">
+            <h2 class="text-3xl font-bold tracking-tight mb-8 fade-in">The Core Team</h2>
+                <div class="inline-flex flex-wrap justify-center gap-8">
+                    <div class="team-member text-center">
+                        <img src="https://placehold.co/128x128/A2D2FF/2F4F4F?text=SG" alt="Shweta Gore" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Shweta Gore</h3>
+                        <p class="text-gray-600">Frontend Dev</p>
+                    </div>
+                    <div class="team-member text-center">
+                        <img src="https://placehold.co/128x128/FFDAB9/2F4F4F?text=HW" alt="Harsh Walke" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Harsh Walke</h3>
+                        <p class="text-gray-600">Frontend Dev</p>
+                    </div>
+                    <div class="team-member text-center">
+                        <img src="https://placehold.co/128x128/C1FFC1/2F4F4F?text=RB" alt="Rushi Banekar" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Rushi Banekar</h3>
+                        <p class="text-gray-600">Backend Dev</p>
+                    </div>
+                    <div class="team-member text-center">
+                        <img src="https://placehold.co/128x128/E0B0FF/2F4F4F?text=SG" alt="Shalin Gonge" class="w-32 h-32 rounded-full mx-auto mb-4 shadow-lg">
+                        <h3 class="text-xl font-bold">Shalin Gonge</h3>
+                        <p class="text-gray-600">Backend Dev</p>
+                    </div>
+                </div>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            const fadeInElements = document.querySelectorAll('.fade-in');
+
+            fadeInElements.forEach(el => {
+                gsap.to(el, {
+                    opacity: 1,
+                    y: 0,
+                    duration: 0.8,
+                    ease: 'power2.out',
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 85%', // Animate when 85% of the element is in view
+                        toggleActions: 'play none none none',
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>

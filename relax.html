@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relax Zone - MindBloom</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">
+            🌱 MindBloom
+        </div>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="mood.html">My Mood</a></li>
+                <li><a href="journal.html">Journal Space</a></li>
+                <li><a href="relax.html">Relax Zone</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="profile.html">My Profile</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="dashboard">
+        <h1 class="welcome-message">Relaxation Room</h1>
+        <div class="relax-grid">
+
+            <!-- Breathing Exercise -->
+            <div class="relax-card breathing-card">
+                <h2>Breathing Exercise</h2>
+                <div id="breathing-circle" class="breathing-circle"></div>
+                <p id="breathing-text">Breathe In...</p>
+            </div>
+
+
+            <!-- Music Section -->
+            <div class="relax-card music-card">
+                <h2>Calm Tunes</h2>
+                <div class="music-player">
+                    <p>Lofi Beats</p>
+                    <audio id="lofi-audio" src="https://raw.githubusercontent.com/dianavile/mindbloom-assets/main/lofi.mp3" loop></audio>
+                    <button class="music-control-btn" data-audio="lofi-audio">▶️</button>
+                </div>
+                <div class="music-player">
+                    <p>Rain Sounds</p>
+                    <audio id="rain-audio" src="https://raw.githubusercontent.com/dianavile/mindbloom-assets/main/rain.mp3" loop></audio>
+                    <button class="music-control-btn" data-audio="rain-audio">▶️</button>
+                </div>
+                <div class="music-player">
+                    <p>Nature Ambience</p>
+                    <audio id="nature-audio" src="https://raw.githubusercontent.com/dianavile/mindbloom-assets/main/nature.mp3" loop></audio>
+                    <button class="music-control-btn" data-audio="nature-audio">▶️</button>
+                </div>
+            </div>
+
+            <!-- Pomodoro Timer -->
+            <div class="relax-card timer-card">
+                <h2>Pomodoro Timer</h2>
+                <div id="timer-display" class="timer-display">25:00</div>
+                <div class="timer-controls">
+                    <button id="timer-start-pause" class="btn">Start</button>
+                    <button id="timer-reset" class="btn">Reset</button>
+                </div>
+            </div>
+
+            <!-- Motivational Quote -->
+            <div class="relax-card quote-card">
+                <h2>A Moment of Peace</h2>
+                <blockquote id="quote-display">Loading quote...</blockquote>
+<button id="change-quote-btn" class="btn" style="margin-top: 10px;">Change Quote</button>
+            </div>
+
+            <!-- Useful Links -->
+            <div class="relax-card resources-card">
+                <h2>Relaxation Resources</h2>
+                <ul>
+                    <li><a href="https://www.youtube.com/watch?v=inpok4MKVLM" target="_blank">Guided Meditation</a></li>
+                    <li><a href="#" target="_blank">Gentle Yoga Flow</a></li>
+                    <li><a href="#" target="_blank">Sleep Hypnosis</a></li>
+                </ul>
+            </div>
+
+
+        </div>
+    </main>
+
+    <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm"></script>
+<script src="auth.js"></script>
+<script src="relax.js"></script>
+</body>
+</html>

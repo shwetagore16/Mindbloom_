@@ -1,0 +1,15 @@
+<svg width="120" height="140" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Main open bag body -->
+  <ellipse cx="60" cy="100" rx="40" ry="30" fill="#a0522d" stroke="#7c421a" stroke-width="4"/>
+  <!-- Bag opening (top) -->
+  <ellipse cx="60" cy="70" rx="45" ry="22" fill="#d2a679" stroke="#7c421a" stroke-width="4"/>
+  <!-- Bag shadow -->
+  <ellipse cx="60" cy="120" rx="32" ry="10" fill="#7c421a" fill-opacity="0.25"/>
+  <!-- Bag sides -->
+  <path d="M20 90 Q15 80 35 70" stroke="#7c421a" stroke-width="3" fill="none"/>
+  <path d="M100 90 Q105 80 85 70" stroke="#7c421a" stroke-width="3" fill="none"/>
+  <!-- Bag handle -->
+  <path d="M40 60 Q60 35 80 60" stroke="#7c421a" stroke-width="4" fill="none"/>
+  <!-- Interior shading -->
+  <ellipse cx="60" cy="72" rx="30" ry="10" fill="#a0522d" fill-opacity="0.23"/>
+</svg>
